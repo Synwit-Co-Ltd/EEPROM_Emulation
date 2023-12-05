@@ -346,7 +346,7 @@ EE_PageStatus_t EE_getPageStatus(uint32_t page)
 	
 	EE_FlashRead(page, 0, &ee_addr, &value);
 	
-	return (value >> 24);
+	return (EE_PageStatus_t)(value >> 24);
 }
 
 

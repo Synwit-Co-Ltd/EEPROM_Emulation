@@ -337,7 +337,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>SW_LOG_LEVEL = 3</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\SWM341_Lib\SWM341_StdPeriph_Driver\CSL\CMSIS\CoreSupport;..\..\SWM341_Lib\SWM341_StdPeriph_Driver\CSL\CMSIS\DeviceSupport;..\..\SWM341_Lib\SWM341_StdPeriph_Driver\CSL\SWM341_StdPeriph_Driver;..\;.</IncludePath>
             </VariousControls>

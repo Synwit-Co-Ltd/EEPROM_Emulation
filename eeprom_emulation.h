@@ -24,7 +24,7 @@ bool EE_Write(uint32_t ee_addr, uint32_t value);
 
 uint32_t EE_getEraseCount(void);
 EE_PageStatus_t EE_getPageStatus(uint32_t page);
-void EE_setPageStatus(uint32_t page, uint8_t status);
+void EE_setPageStatus(uint32_t page, EE_PageStatus_t status);
 
 
 #endif

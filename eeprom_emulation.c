@@ -10,7 +10,7 @@ static bool EE_IfAllErased(uint32_t page);
 static bool EE_TransferPage(uint32_t ee_addr, uint32_t value);
 
 
-/****************************************************************************************************************************************** 
+/******************************************************************************************************************************************
 * 函数名称: EE_Init()
 * 功能说明:	EEPROM 初始化
 * 输    入: 无
@@ -94,7 +94,7 @@ bool EE_Init(void)
 }
 
 
-/****************************************************************************************************************************************** 
+/******************************************************************************************************************************************
 * 函数名称: EE_Format()
 * 功能说明:	擦除全部页，并将 page 0 设置为 active page.
 * 输    入: 无
@@ -117,9 +117,9 @@ void EE_Format(void)
 }
 
 
-/****************************************************************************************************************************************** 
+/******************************************************************************************************************************************
 * 函数名称: EE_Read()
-* 功能说明:	Read the latest value @ specified eeprom address.
+* 功能说明:	Read the latest value for specified eeprom address.
 * 输    入: uint32_t ee_addr
 *			uint32_t *value
 * 输    出: bool
@@ -146,7 +146,7 @@ bool EE_Read(uint32_t ee_addr, uint32_t *value)
 }
 
 
-/****************************************************************************************************************************************** 
+/******************************************************************************************************************************************
 * 函数名称: EE_Write()
 * 功能说明:	update value for specified eeprom address.
 * 输    入: uint32_t ee_addr
@@ -193,7 +193,7 @@ bool EE_Write(uint32_t ee_addr, uint32_t value)
 }
 
 
-/****************************************************************************************************************************************** 
+/******************************************************************************************************************************************
 * 函数名称: EE_IfAllErased()
 * 功能说明:	检查 Flash 指定页是否全是“1”
 * 输    入: uint32_t page
@@ -217,7 +217,7 @@ static bool EE_IfAllErased(uint32_t page)
 }
 
 
-/****************************************************************************************************************************************** 
+/******************************************************************************************************************************************
 * 函数名称: EE_TransferPage()
 * 功能说明:	Transfers the most recently written value of each variable, from the active to a new receiving page.
 * 输    入: uint32_t ee_addr
@@ -241,10 +241,14 @@ static bool EE_TransferPage(uint32_t ee_addr, uint32_t value)
 	
 	EE_setPageStatus(EE_receivingPage, eePageStatusReceiving);
 	
+	SW_LOG_INFO("EE_TransferPage from page %d to page %d\n", EE_activePage, EE_receivingPage);
+	
 	/* 传输之前，先将 active 页写入失败的数据，写入 receiving 页第一个位置 */
 	if(ee_addr != 0xFFFFFFFF)
 	{
 		EE_FlashWrite(EE_receivingPage, 1, ee_addr, value);
+		
+		SW_LOG_INFO("    ee_addr = %d, value = %d\n", ee_addr, value);
 	}
 	
 	for(int i = EE_ITEM_COUNT - 1; i > 0; i--)
@@ -272,6 +276,8 @@ static bool EE_TransferPage(uint32_t ee_addr, uint32_t value)
 				}
 				else if(ee_addr_rd_rcv == 0xFFFFFFFF)	// empty word found. all transferred variables are checked.
 				{
+					SW_LOG_INFO("    ee_addr = %d, value = %d\n", ee_addr_rd_act, value_rd_act);
+					
 					EE_FlashWrite(EE_receivingPage, j, ee_addr_rd_act, value_rd_act);
 					break;
 				}
@@ -284,8 +290,12 @@ static bool EE_TransferPage(uint32_t ee_addr, uint32_t value)
 	*/
 	uint32_t eraseCount = EE_getEraseCount();
 	if(EE_receivingPage == 0)
+	{
 		eraseCount++;
-
+		
+		SW_LOG_INFO("eraseCount = %d\n", eraseCount);
+	}
+	
 	/* 写入 erase count 时，保持 page status 域不变 */
 	EE_FlashWrite(EE_receivingPage, 0, 0xFFFFFFFF, (eraseCount & 0xFFFFFF) | 0xFF000000);
 	
@@ -297,11 +307,18 @@ static bool EE_TransferPage(uint32_t ee_addr, uint32_t value)
 
 	EE_activePage    = EE_receivingPage;
 	EE_receivingPage = -1;
-
+	
 	return true;
 }
 
 
+/******************************************************************************************************************************************
+* 函数名称: EE_getEraseCount()
+* 功能说明:	查询 Flash 擦除次数
+* 输    入: 无
+* 输    出: uint32_t
+* 注意事项: 无
+******************************************************************************************************************************************/
 uint32_t EE_getEraseCount(void)
 {
 	uint32_t ee_addr;
@@ -315,6 +332,13 @@ uint32_t EE_getEraseCount(void)
 }
 
 
+/******************************************************************************************************************************************
+* 函数名称: EE_getPageStatus()
+* 功能说明:	查询指定页的页状态
+* 输    入: uint32_t page
+* 输    出: EE_PageStatus_t
+* 注意事项: 无
+******************************************************************************************************************************************/
 EE_PageStatus_t EE_getPageStatus(uint32_t page)
 {
 	uint32_t ee_addr;
@@ -322,11 +346,19 @@ EE_PageStatus_t EE_getPageStatus(uint32_t page)
 	
 	EE_FlashRead(page, 0, &ee_addr, &value);
 	
-	return (EE_PageStatus_t)(value >> 24);
+	return (value >> 24);
 }
 
 
-void EE_setPageStatus(uint32_t page, uint8_t status)
+/******************************************************************************************************************************************
+* 函数名称: EE_setPageStatus()
+* 功能说明:	设置指定页的页状态
+* 输    入: uint32_t page
+*			EE_PageStatus_t status
+* 输    出: 无
+* 注意事项: 无
+******************************************************************************************************************************************/
+void EE_setPageStatus(uint32_t page, EE_PageStatus_t status)
 {
 	/* 写入 page status 时，保持 erase count 域不变 */
 	uint32_t value = (status << 24) | 0xFFFFFF;

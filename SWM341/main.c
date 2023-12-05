@@ -6,18 +6,19 @@
  *	注意：参数地址定义后不能改变，否则会导致读取到其他参数的值；
  *	若一定要修改，则需要调用 EE_Format() 将所有参数删除
  */
-#define EE_ADDR_Speed		0
-#define EE_ADDR_Angle		2
-#define EE_ADDR_Pressure	5
+#define EE_ADDR_Speed	0
+#define EE_ADDR_Angle	2
+#define EE_ADDR_Dummy	5
 
 
 void SerialInit(void);
 
 int main(void)
 {
+	uint32_t i, j;
 	uint32_t speed;
 	uint32_t angle;
-	uint32_t pressure;
+	uint32_t dummy;
 	
  	SystemInit();
 	
@@ -34,7 +35,7 @@ int main(void)
 	
 	EE_Write(EE_ADDR_Speed, 1000);
 	EE_Write(EE_ADDR_Angle, 2000);
-	EE_Write(EE_ADDR_Pressure, 3000);
+	EE_Write(EE_ADDR_Dummy, 3000);
 	
 	EE_Write(EE_ADDR_Speed, 1001);
 	
@@ -48,7 +49,7 @@ int main(void)
 	{
 		printf("speed read fail\n\n");
 	}
-
+	
 	if(EE_Read(EE_ADDR_Angle, &angle))
 	{
 		printf("angle: %d\n\n", angle);
@@ -58,15 +59,47 @@ int main(void)
 		printf("angle read fail\n\n");
 	}
 	
-	if(EE_Read(EE_ADDR_Pressure, &pressure))
+	if(EE_Read(EE_ADDR_Dummy, &dummy))
 	{
-		printf("pressure: %d\n\n", pressure);
+		printf("dummy: %d\n\n", dummy);
 	}
 	else
 	{
-		printf("pressure read fail\n\n");
+		printf("dummy read fail\n\n");
 	}
-
+	
+	printf("Trigger EE_TransferPage() calling\n\n");
+	
+	for(i = 0; i < EE_ITEM_COUNT / 2; i++)
+	{
+		EE_Write(EE_ADDR_Speed, 1000 + i);
+		EE_Write(EE_ADDR_Angle, 2000 + i);
+	}
+	
+	EE_Read(EE_ADDR_Speed, &speed);
+	EE_Read(EE_ADDR_Angle, &angle);
+	EE_Read(EE_ADDR_Dummy, &dummy);
+	
+	printf("speed: expect %d, get %d\n\n", 1000 + i - 1, speed);
+	printf("angle: expect %d, get %d\n\n", 2000 + i - 1, angle);
+	printf("dummy: expect %d, get %d\n\n", 3000,		  dummy);
+	
+	printf("Trigger eraseCount increase by 1\n\n");
+	
+	for(j = 0; j < EE_PAGE_COUNT * EE_ITEM_COUNT / 2; j++)
+	{
+		EE_Write(EE_ADDR_Angle, 2000 + j);
+		EE_Write(EE_ADDR_Dummy, 3000 + j);
+	}
+	
+	EE_Read(EE_ADDR_Speed, &speed);
+	EE_Read(EE_ADDR_Angle, &angle);
+	EE_Read(EE_ADDR_Dummy, &dummy);
+	
+	printf("speed: expect %d, get %d\n\n", 1000 + i - 1, speed);
+	printf("angle: expect %d, get %d\n\n", 2000 + j - 1, angle);
+	printf("dummy: expect %d, get %d\n\n", 3000 + j - 1, dummy);
+		
  	while(1==1)
  	{
  	}

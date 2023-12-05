@@ -26,7 +26,7 @@ static inline void EE_FlashWrite(uint32_t page, uint32_t index, uint32_t ee_addr
 	/* 先写数据后写地址，防止地址写入后数据还没来得及写入就突然掉电的情况 */
 	uint32_t buffer[4] = { value, ee_addr, 0xFFFFFFFF, 0xFFFFFFFF };
 	
-	FLASH_Write(EE_FLASH_BASE + EE_PAGE_SIZE * page + EE_ITEM_SIZE * index, buffer, 4);
+	FLASH_Write(EE_FLASH_BASE + EE_PAGE_SIZE * page + EE_ITEM_SIZE * index, buffer, EE_ITEM_SIZE / 4);
 }
 
 

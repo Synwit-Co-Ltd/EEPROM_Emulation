@@ -5,5 +5,7 @@ Synwit MCU on-chip Flash Emulate EEPROM
 ```
 <root_dir>/
 	EEPROM_Emulation
+	SWM181_Lib
+	SWM260_Lib
 	SWM341_Lib
 ```

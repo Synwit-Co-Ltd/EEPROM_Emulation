@@ -23,6 +23,8 @@ void test_eeprom(void)
 		EE_Format();
 	}
 	
+	printf("Number of parameters can be saved: %d\n\n", EE_ITEM_COUNT - 1);
+	
 	EE_Write(EE_ADDR_Speed, 1000);
 	EE_Write(EE_ADDR_Angle, 2000);
 	EE_Write(EE_ADDR_Dummy, 3000);

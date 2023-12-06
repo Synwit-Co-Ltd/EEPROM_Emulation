@@ -22,7 +22,7 @@
   </DaveTm>
 
   <Target>
-    <TargetName>SWM211</TargetName>
+    <TargetName>SWM241</TargetName>
     <ToolsetNumber>0x4</ToolsetNumber>
     <ToolsetName>ARM-ADS</ToolsetName>
     <TargetOption>
@@ -135,7 +135,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>JL2CM3</Key>
-          <Name>-U59400009 -O78 -S1 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO15 -FD20000000 -FC1000 -FN1 -FP0($$Device:SWM211x8$Flash\SWM211x8.FLM) -FS00 -FL08000</Name>
+          <Name>-U59400009 -O78 -S2 -ZTIFSpeedSel5000 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO15 -FD20000000 -FC1000 -FN1 -FF0SWM241xB -FS00 -FL020000 -FP0($$Device:SWM241xB$Flash\SWM241xB.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -143,7 +143,7 @@
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>((UART_TypeDef *) (0x40040000 + 0x2000))</ItemText>
+          <ItemText>((UART_TypeDef *) (0x50000000 + 0x10000))</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -151,7 +151,7 @@
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
-        <periodic>0</periodic>
+        <periodic>1</periodic>
         <aLwin>1</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
@@ -188,6 +188,12 @@
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
       <pMultCmdsp></pMultCmdsp>
+      <SystemViewers>
+        <Entry>
+          <Name>System Viewer\UART0</Name>
+          <WinId>35905</WinId>
+        </Entry>
+      </SystemViewers>
     </TargetOption>
   </Target>
 
@@ -236,8 +242,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\SWM2X1_Lib\SWM2X1_StdPeriph_Driver\CSL\SWM2X1_StdPeriph_Driver\SWM2X1_gpio.c</PathWithFileName>
-      <FilenameWithoutPath>SWM2X1_gpio.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\SWM241_Lib\SWM241_StdPeriph_Driver\CSL\SWM241_StdPeriph_Driver\SWM241_gpio.c</PathWithFileName>
+      <FilenameWithoutPath>SWM241_gpio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -248,8 +254,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\SWM2X1_Lib\SWM2X1_StdPeriph_Driver\CSL\SWM2X1_StdPeriph_Driver\SWM2X1_timr.c</PathWithFileName>
-      <FilenameWithoutPath>SWM2X1_timr.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\SWM241_Lib\SWM241_StdPeriph_Driver\CSL\SWM241_StdPeriph_Driver\SWM241_timr.c</PathWithFileName>
+      <FilenameWithoutPath>SWM241_timr.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -260,8 +266,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\SWM2X1_Lib\SWM2X1_StdPeriph_Driver\CSL\SWM2X1_StdPeriph_Driver\SWM2X1_uart.c</PathWithFileName>
-      <FilenameWithoutPath>SWM2X1_uart.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\SWM241_Lib\SWM241_StdPeriph_Driver\CSL\SWM241_StdPeriph_Driver\SWM241_uart.c</PathWithFileName>
+      <FilenameWithoutPath>SWM241_uart.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -272,8 +278,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\SWM2X1_Lib\SWM2X1_StdPeriph_Driver\CSL\SWM2X1_StdPeriph_Driver\SWM2X1_port.c</PathWithFileName>
-      <FilenameWithoutPath>SWM2X1_port.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\SWM241_Lib\SWM241_StdPeriph_Driver\CSL\SWM241_StdPeriph_Driver\SWM241_flash.c</PathWithFileName>
+      <FilenameWithoutPath>SWM241_flash.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -284,8 +290,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\SWM2X1_Lib\SWM2X1_StdPeriph_Driver\CSL\SWM2X1_StdPeriph_Driver\SWM211_flash.c</PathWithFileName>
-      <FilenameWithoutPath>SWM211_flash.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\SWM241_Lib\SWM241_StdPeriph_Driver\CSL\SWM241_StdPeriph_Driver\SWM241_port.c</PathWithFileName>
+      <FilenameWithoutPath>SWM241_port.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -293,7 +299,7 @@
 
   <Group>
     <GroupName>CSL\CMSIS</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -304,8 +310,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\SWM2X1_Lib\SWM2X1_StdPeriph_Driver\CSL\CMSIS\DeviceSupport\system_SWM211.c</PathWithFileName>
-      <FilenameWithoutPath>system_SWM211.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\SWM241_Lib\SWM241_StdPeriph_Driver\CSL\CMSIS\DeviceSupport\system_SWM241.c</PathWithFileName>
+      <FilenameWithoutPath>system_SWM241.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -316,8 +322,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\SWM2X1_Lib\SWM2X1_StdPeriph_Driver\CSL\CMSIS\DeviceSupport\startup\arm\startup_SWM211.s</PathWithFileName>
-      <FilenameWithoutPath>startup_SWM211.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\SWM241_Lib\SWM241_StdPeriph_Driver\CSL\CMSIS\DeviceSupport\startup\arm\startup_SWM241.s</PathWithFileName>
+      <FilenameWithoutPath>startup_SWM241.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

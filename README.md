@@ -8,6 +8,7 @@ Synwit MCU on-chip Flash Emulate EEPROM
 	SWM181_Lib
 	SWM190_Lib
 	SWM2X1_Lib
+	SWM241_Lib
 	SWM260_Lib
 	SWM341_Lib
 ```
